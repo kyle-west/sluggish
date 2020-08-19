@@ -1,0 +1,7 @@
+.hidden {
+  display: none;
+}
+
+#app-list details {
+  display: inline-block;
+}

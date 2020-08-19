@@ -1,12 +1,12 @@
 {
-  "name": "electron-quick-start",
+  "name": "sluggish",
   "version": "1.0.0",
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/kyle-west/sluggish",
   "keywords": [
     "Electron",
     "quick",
@@ -18,5 +18,8 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^9.2.0"
+  },
+  "dependencies": {
+    "parse-diff": "^0.7.0"
   }
 }
