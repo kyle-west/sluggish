@@ -21,20 +21,7 @@ async function renderDiff(app, first, second) {
   changePage('#hash-diff')
   stamp('#hash-diff', `Download complete. Computing diff...`)
   const diff = await slugs.diff(app, first, second)
-  const lhsRoot = slugs.computeDiffFileRoot(app, first.hash)
-  const rhsRoot = slugs.computeDiffFileRoot(app, second.hash)
-
-  stamp('#hash-diff', `<pre>${diff.map(line => {
-    if (line.startsWith('diff')) {
-      return '<h2>' + line.replace(/diff\s+-r/, '').replace(/--exclude=\w+/g, '').replace(lhsRoot, first.version + '::') .replace(rhsRoot, second.version + '::').trim().replace(/\s+/, ' ... ') + '</h2>'
-    } else if (/^\d+/.test(line)) {
-      return `\n\n\n<h3 line-label>${line}</h3>`
-    } else if (line.startsWith('---')) {
-      return `<hr/>`
-    } else {
-      return line
-    }
-  }).join('\n')}</pre>`)
+  stamp('#hash-diff', diff)
 }
 
 async function renderAppSlugs(app) {
