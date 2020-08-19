@@ -1,18 +1,18 @@
 {
   "name": "sluggish",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "version": "0.1.0",
+  "description": "Compare two slugs in Heroku",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
   "repository": "https://github.com/kyle-west/sluggish",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "heroku",
+    "slugs",
+    "diff",
+    "compare",
+    "analyze"
   ],
   "author": "GitHub",
   "license": "UNLICENSED",
@@ -20,7 +20,6 @@
     "electron": "^9.2.0"
   },
   "dependencies": {
-    "diff2html": "^3.1.12",
-    "parse-diff": "^0.7.0"
+    "diff2html": "^3.1.12"
   }
 }

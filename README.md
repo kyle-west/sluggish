@@ -1,8 +1,8 @@
-# sluggish
+# sluggish _(Work in Progress)_
 
 Compare two Slugs in Heroku.
 
-_This app is named what it is because it analyzes heroku slugs and it is very slow._
+_This app is named what it is because it analyzes heroku slugs **and** it is very slow._
 
 ![Screenshot](./sluggish.png)
 
