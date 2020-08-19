@@ -1,5 +1,7 @@
 const slugs = require('./lib/heroku-slugs')
+const { resolve } = require('path')
 
+const delay = (time) => new Promise(r => setTimeout(() => r(), time))
 
 const stamp = async (selector, text = '', inner = 'innerHTML') => {
   const element = document.querySelector(selector)
@@ -7,6 +9,7 @@ const stamp = async (selector, text = '', inner = 'innerHTML') => {
     element[inner] = text
     element.removeAttribute('untouched')
   }
+  await delay(100) // delay returning because I ran into a blocking race condition
   return element
 }
 
@@ -31,14 +34,15 @@ async function changePage (page, title, onBackClick) {
 
 async function renderDiff(app, first, second) {
   await changePage('#hash-diff', `Comparing: ${app} ${second.version} to ${first.version}`, () => renderAppSlugs(app))
-  await stamp('#hash-diff', `Download complete. Computing diff...`)
+  await stamp('#hash-diff', `<div class="spinner"></div> Download complete. Computing diff...`)
   const diff = await slugs.diff(app, first, second)
-  await stamp('#hash-diff', diff)
+  const rootPath = resolve('.', 'slugs')
+  await stamp('#hash-diff', diff.replace(new RegExp(`${rootPath}/{${second.hash} → ${first.hash}}/${app}/`, 'g'), `{${second.version} → ${first.version}} :: `))
 }
 
 async function renderAppSlugs(app) {
   await changePage('#slug-list', `Pick two slugs to compare in ${app}`, () => renderAppList())
-  await stamp('#slug-list', 'Loading...')
+  await stamp('#slug-list', `<div class="spinner"></div> Loading slugs for ${app}...`)
   try {
     const slugList = await slugs.getAll(app)
     await stamp('#slug-list', `
@@ -56,7 +60,7 @@ async function renderAppSlugs(app) {
       const secondDL = slugs.downloadSlug(app, second.hash, (...args) => console.log('second', ...args))
 
       await stamp('#slug-list', `
-        Downloading ${app}: ${first.version} and ${second.version}. This may take several minutes...
+        <div class="spinner"></div> Downloading ${app}: ${first.version} and ${second.version}. This may take several minutes...
       `);
 
       await Promise.all([firstDL, secondDL])

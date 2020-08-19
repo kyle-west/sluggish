@@ -15,10 +15,10 @@
       <div id="back-button-wrapper"></div>
       <em id="instructions">Compare two Heroku Slugs</em>
     </header>
-
-    <ul id="app-list" untouched is-page-level>Loading...</ul>
-    <div id="slug-list" untouched is-page-level class="hidden">Loading...</div>
-    <div id="hash-diff" untouched is-page-level class="hidden">Loading...</div>
+    
+    <ul id="app-list" untouched is-page-level><div class="spinner"></div>Fetching list of your Heroku apps...</ul>
+    <div id="slug-list" untouched is-page-level class="hidden"></div>
+    <div id="hash-diff" untouched is-page-level class="hidden"></div>
 
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
