@@ -5,3 +5,28 @@
 #app-list details {
   display: inline-block;
 }
+#app-list, #app-list ul {
+  list-style: none;
+}
+#app-list li {
+  font-size: 20px;
+  margin: 5px 5px 15px;
+}
+
+li[on-click-render-app] {
+  cursor: pointer;
+}
+li:not([on-click-render-app]) {
+  cursor: context-menu;
+}
+
+.main-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid black;
+  margin-bottom: 15px;
+}
+
+.main-header > * {
+  margin: 10px;
+}
