@@ -4,7 +4,9 @@
   "description": "Compare two slugs in Heroku",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist:icons": "sh ./scripts/generate_icon.sh",
+    "dist": "npm run dist:icons && sh ./scripts/packager.sh"
   },
   "repository": "https://github.com/kyle-west/sluggish",
   "keywords": [
