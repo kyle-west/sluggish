@@ -37,17 +37,21 @@ async function renderDiff(app, first, second) {
   await stamp('#hash-diff', `<div class="spinner"></div> Download complete. Computing diff...`)
   const diff = await slugs.diff(app, first, second)
   const rootPath = resolve('.', 'slugs')
-  await stamp('#hash-diff', diff.replace(new RegExp(`${rootPath}/{${second.hash} → ${first.hash}}/${app}/`, 'g'), `{${second.version} → ${first.version}} :: `))
+  await stamp('#hash-diff', diff
+    .replace(new RegExp(`${rootPath}/{${second.hash} → ${first.hash}}/${app}/app/`, 'g'), `{${second.version} → ${first.version}} :: `)
+    .replace(new RegExp('<span class="d2h-tag d2h-moved d2h-moved-tag">RENAMED</span>', 'g'), '')
+  )
 }
 
-async function renderAppSlugs(app) {
+async function renderAppSlugs(app, pullFromCache = true) {
   await changePage('#slug-list', `Pick two slugs to compare in ${app}`, () => renderAppList())
   await stamp('#slug-list', `<div class="spinner"></div> Loading slugs for ${app}...`)
   try {
-    const slugList = await slugs.getAll(app)
+    const slugList = await slugs.getAll(app, pullFromCache)
     await stamp('#slug-list', `
       <button select-diff-slugs>Ready to compare</button>
-      <table>
+      <button refresh-slug-list>Refresh List</button>
+      <table class="slug-table">
         <tr><th>Select 2</th><th>Version</th><th>Hash</th></tr>
         ${slugList.map(({version, hash}) => `
           <tr><td><input type="checkbox" value="${hash}" data-version="${version}"/></td><td>${version}</td><td>${hash}</td></tr>
@@ -69,6 +73,7 @@ async function renderAppSlugs(app) {
 
       renderDiff(app, first, second)
     }
+    document.querySelector('[refresh-slug-list]').onclick = async () => renderAppSlugs(app, false)
   } catch (err) {
     await stamp('#slug-list', `<pre>${err.message}</pre>`)
   }
