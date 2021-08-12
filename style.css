@@ -6,6 +6,9 @@ body {
   display: none;
 }
 
+details, input[type="checkbox"] {
+  cursor: pointer;
+}
 #app-list details {
   display: inline-block;
 }
